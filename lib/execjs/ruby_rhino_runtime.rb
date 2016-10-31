@@ -73,11 +73,10 @@ module ExecJS
       end
 
       private
+        # Temp Hack to run in he some optimization_level
         # Disables bytecode compiling which limits you to 64K scripts
         def fix_memory_limit!(context)
-          if context.respond_to?(:optimization_level=)
-            context.optimization_level = -1
-          else
+          if !context.respond_to?(:optimization_level=)
             context.instance_eval { @native.setOptimizationLevel(-1) }
           end
         end
