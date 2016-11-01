@@ -6,7 +6,12 @@ module ExecJS
       def initialize(runtime, source = "", options = {})
         source = encode(source)
 
-        @rhino_context = ::Rhino::Context.new
+        if options[:restrictable]
+          @rhino_context = ::Rhino::Context.new({:restrictable=>options[:restrictable]})
+          @rhino_context.timeout_limit=options[:timeout_limit] if options[:timeout_limit]
+        else
+          @rhino_context = ::Rhino::Context.new
+        end
         fix_memory_limit! @rhino_context
         @rhino_context.eval(source)
       rescue Exception => e
