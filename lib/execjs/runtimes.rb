@@ -16,6 +16,8 @@ module ExecJS
 
     RubyRhino = RubyRhinoRuntime.new
 
+    NasHorn = NashornRuntime.new
+
     MiniRacer = MiniRacerRuntime.new
 
     Node = ExternalRuntime.new(
@@ -79,6 +81,7 @@ module ExecJS
 
     def self.runtimes
       @runtimes ||= [
+        NasHorn,
         RubyRacer,
         RubyRhino,
         Duktape,
